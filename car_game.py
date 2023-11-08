@@ -9,10 +9,10 @@ pygame.init()
 pygame.mixer.init()
 
 # Load the default sound
-car_sound = pygame.mixer.Sound("sound.mp3")
+car_sound = pygame.mixer.Sound("sounds/sound.mp3")
 
 # Load the crash sound
-crash_sound = pygame.mixer.Sound("die.mp3")
+crash_sound = pygame.mixer.Sound("sounds/die.mp3")
 
 # Play the default sound continuously
 car_sound.play(-1)
