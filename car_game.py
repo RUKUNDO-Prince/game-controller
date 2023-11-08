@@ -1,8 +1,21 @@
 import pygame
 from pygame.locals import *
 import random
+import pygame.mixer
 
 pygame.init()
+
+# Initialize Pygame Mixer
+pygame.mixer.init()
+
+# Load the default sound
+car_sound = pygame.mixer.Sound("sound.mp3")
+
+# Load the crash sound
+crash_sound = pygame.mixer.Sound("die.mp3")
+
+# Play the default sound continuously
+car_sound.play(-1)
 
 # create the window
 width = 500
@@ -99,17 +112,24 @@ while running:
         if event.type == QUIT:
             running = False
 
-        # move the player's car using the left/right arrow keys
-        if event.type == KEYDOWN:
+        # Play car sound
+        if not gameover:
+            car_sound.play()
 
+        # Move the player's car using the left/right arrow keys
+        if event.type == KEYDOWN:
             if event.key == K_LEFT and player.rect.center[0] > left_lane:
                 player.rect.x -= 100
             elif event.key == K_RIGHT and player.rect.center[0] < right_lane:
                 player.rect.x += 100
 
-            # check if there's a side swipe collision after changing lanes
+            # Check if there's a side swipe collision after changing lanes
             for vehicle in vehicle_group:
                 if pygame.sprite.collide_rect(player, vehicle):
+
+                    # Play crash sound and stop the car sound
+                    car_sound.stop()
+                    crash_sound.play()
 
                     gameover = True
 
@@ -121,7 +141,6 @@ while running:
                     elif event.key == K_RIGHT:
                         player.rect.right = vehicle.rect.left
                         crash_rect.center = [player.rect.right, (player.rect.center[1] + vehicle.rect.center[1]) / 2]
-
 
     # draw the grass
     screen.fill(green)
@@ -190,6 +209,11 @@ while running:
 
     # check if there's a head on collision
     if pygame.sprite.spritecollide(player, vehicle_group, True):
+
+        # Play crash sound and stop the car sound
+        car_sound.stop()
+        crash_sound.play()
+
         gameover = True
         crash_rect.center = [player.rect.center[0], player.rect.top]
 
