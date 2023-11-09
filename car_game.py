@@ -5,7 +5,7 @@ import pygame.mixer
 
 pygame.init()
 
-# Initialize Pygame Mixer
+# Initialize Pygame Mixer s
 pygame.mixer.init()
 
 # Load the default sound
