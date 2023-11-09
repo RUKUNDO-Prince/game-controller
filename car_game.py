@@ -14,6 +14,9 @@ car_sound = pygame.mixer.Sound("sounds/sound.mp3")
 # Load the crash sound
 crash_sound = pygame.mixer.Sound("sounds/die.mp3")
 
+# Load the score sound
+score_sound = pygame.mixer.Sound("sounds/buttons.ogg")
+
 # Play the default sound continuously
 car_sound.play(-1)
 
@@ -152,12 +155,6 @@ while running:
                     player.rect.right = vehicle.rect.left
                     crash_rect.center = [player.rect.right, (player.rect.center[1] + vehicle.rect.center[1]) / 2]
 
-    # ... (remaining code)
-
-
-
-
-
     # draw the grass
     screen.fill(green)
 
@@ -207,10 +204,11 @@ while running:
             vehicle.kill()
 
             # add to score
+            score_sound.play()
             score += 1
 
             # speed up the game after passing 5 vehicles
-            if score > 0 and score % 5 == 0:
+            if score > 0 and score % 10 == 0:
                 speed += 1
 
     # draw the vehicles
